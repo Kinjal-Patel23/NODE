@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Task List</title>
+    <link rel="stylesheet" href="/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="bg-animation"></div>
+
+    <div class="glass-card">
+      <h1>Task List</h1>
+
+      <div class="task-container">
+        <ul class="user-list">
+          <% todos.forEach((todo, index) => { %>
+          <li>
+            <span><%= todo.id %> - <%= todo.task %></span>
+            <div class="icons">
+              <form
+                action="/edit/<%= index %>"
+                method="GET"
+                style="display: inline"
+              >
+                <button
+                  style="
+                    background: none;
+                    border: none;
+                    color: #fff;
+                    cursor: pointer;
+                  "
+                >
+                  <i class="fas fa-edit"></i>
+                </button>
+              </form>
+              <form
+                action="/delete/<%= index %>"
+                method="POST"
+                style="display: inline"
+              >
+                <button
+                  style="
+                    background: none;
+                    border: none;
+                    color: #fff;
+                    cursor: pointer;
+                  "
+                >
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </form>
+            </div>
+          </li>
+          <% }) %>
+        </ul>
+      </div>
+
+      <div class="button-group" style="text-align: right; margin-bottom: 10px">
+        <form action="/delete-all" method="POST">
+          <button class="btn delete-all-btn">Delete All</button>
+        </form>
+      </div>
+
+      <a href="/" class="btn back-btn">← Back</a>
+    </div>
+  </body>
+</html>
