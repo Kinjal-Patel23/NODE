@@ -1,0 +1,155 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f6f8;
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.container {
+  background: #ffffff;
+  padding: 30px 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 420px;
+}
+
+.heading {
+  margin-bottom: 25px;
+  text-align: center;
+  color: #333;
+}
+
+.input-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.task-input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.add-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: background 0.2s ease;
+}
+
+.add-btn:hover {
+  background: #0069d9;
+}
+
+.filter-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filter-buttons button {
+  flex: 1;
+  background-color: #e0e0e0;
+  color: #333;
+  font-weight: 500;
+  border-radius: 6px;
+  padding: 8px 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border: none;
+}
+
+.filter-buttons button:hover {
+  background-color: #ccc;
+}
+
+.task-list {
+  list-style: none;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 16px;
+  color: #444;
+}
+
+.task-item input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.task-text {
+  flex: 1;
+}
+
+.completed {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.edit-input {
+  flex: 1;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-right: 10px;
+  font-size: 15px;
+}
+
+.save-btn {
+  background: green;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.icon-btn {
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #555;
+}
+
+.delete-all-btn {
+  margin-top: 25px;
+  width: 100%;
+  background: #dc3545;
+  color: white;
+  font-weight: 600;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.delete-all-btn:hover {
+  background: #c82333;
+}
+
+.counter {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 20px;
+  color: #555;
+}

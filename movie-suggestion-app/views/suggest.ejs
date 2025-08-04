@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movies</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <h1><%= category %> Movies</h1>
+
+      <ul class="movie-list">
+        <% movies.forEach(movie => { %>
+        <li class="movie-card">
+          <img src="/images/<%= movie.image %>" class="poster" />
+          <div class="movie-info">
+            <h2><%= movie.title %> (<%= movie.year %>)</h2>
+            <p><strong>⭐ Rating:</strong> <%= movie.rating %></p>
+            <p><%= movie.description %></p>
+          </div>
+        </li>
+        <% }) %>
+      </ul>
+
+      <div class="back-button">
+        <a href="/home"><button>← Back to Home</button></a>
+      </div>
+    </div>
+  </body>
+</html>
