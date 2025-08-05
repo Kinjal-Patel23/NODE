@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Todo List</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+      integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h2>TODO List</h2>
+
+      <div class="input-group">
+        <input
+          type="text"
+          id="taskInput"
+          class="todo-input"
+          placeholder="Enter task..."
+        />
+        <button onclick="addTask()">Add</button>
+        <button onclick="deleteAll()">Delete All</button>
+      </div>
+
+      <ul id="taskList"></ul>
+    </div>
+
+    <script>
+      // Add Task
+      async function addTask() {
+        const name = document.getElementById("taskInput").value;
+        if (name.trim() === "") return;
+        await fetch("http://localhost:5000/add", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name }),
+        });
+        document.getElementById("taskInput").value = "";
+        getTasks();
+      }
+
+      async function getTasks() {
+        const res = await fetch("http://localhost:5000/tasks");
+        const data = await res.json();
+        const list = document.getElementById("taskList");
+        list.innerHTML = "";
+        data.forEach((item) => {
+          list.innerHTML += `
+          <li>
+            <span>${item.name}</span>
+            <div class="actions">
+              <button onclick="editTask('${item._id}', '${item.name}')" class="btn action-btn"><i class="fa-solid fa-pen-to-square"></i></button>
+              <button onclick="deleteTask('${item._id}')" class="btn action-btn"><i class="fa-solid fa-trash"></i></button>
+            </div>
+          </li>`;
+        });
+      }
+
+      // Delete Task
+      async function deleteTask(id) {
+        await fetch(`http://localhost:5000/remove/${id}`, {
+          method: "DELETE",
+        });
+        getTasks();
+      }
+
+      // Edit Task
+      async function editTask(id, oldName) {
+        const newName = prompt("Edit task:", oldName);
+        if (newName) {
+          await fetch(`http://localhost:5000/update/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name: newName }),
+          });
+          getTasks();
+        }
+      }
+
+      // Delete All Tasks
+      async function deleteAll() {
+        // const confirmDelete = confirm(
+        //   "Are you sure you want to delete all tasks?"
+        // );
+        // if (confirmDelete) {
+        await fetch("http://localhost:5000/removeAll", {
+          method: "DELETE",
+        });
+        getTasks();
+      }
+      // }
+
+      getTasks();
+    </script>
+  </body>
+</html>
