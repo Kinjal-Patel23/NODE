@@ -1,8 +1,8 @@
 # Server node_modules
-server/node_modules/
+Server/node_modules/
 
 # Server env file
-server/.env
+Server/.env
 
 # Logs
 *.log
