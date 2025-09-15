@@ -17,7 +17,6 @@ const port = 5000;
 app.use(express.json());
 app.use(cors());
 
-
 // Routes
 app.get("/", async (req, res) => {
     res.json({ message: "Server is running" })
