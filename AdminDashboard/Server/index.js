@@ -23,9 +23,13 @@ app.get("/", async (req, res) => {
     res.json({ message: "Server is running" })
 });
 
-mongoose.connect("mongodb://localhost:27017/dashboard_db")
+mongoose.connect(process.env.MONGODB_URI)
     .then(() => console.log("Database connected successfully"))
     .catch((err) => console.log("Database connection error:", err));
+
+// mongoose.connect("mongodb://localhost:27017/dashboard_db")
+//     .then(() => console.log("Database connected successfully"))
+//     .catch((err) => console.log("Database connection error:", err));
 
 //Signup
 app.post("/signup", async (req, res) => {
@@ -68,18 +72,18 @@ app.post("/login", async (req, res) => {
         const superAdminEmail = "superadmin@gmail.com"
         const superAdminPass = "Super@dmin12"
 
-        if (!token) {
-            return res.json({ message: "⚠️ Captcha is required" });
-        }
+        // if (!token) {
+        //     return res.json({ message: "⚠️ Captcha is required" });
+        // }
 
-        const secretKey = process.env.RECAPTCHA_SECRET_KEY;
-        const captchaVerify = await axios.post(
-            `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}`
-        );
+        // const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+        // const captchaVerify = await axios.post(
+        //     `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}`
+        // );
 
-        if (!captchaVerify.data.success) {
-            return res.json({ message: "Captcha verification failed" });
-        }
+        // if (!captchaVerify.data.success) {
+        //     return res.json({ message: "Captcha verification failed" });
+        // }
 
         const checkUser = await authModel.findOne({ email });
         if (!checkUser) {
@@ -361,11 +365,11 @@ app.get("/products", async (req, res) => {
         const products = await productModel.find();
         console.log(products);
 
-        res.json({message : "Products fetched successfully", products});
+        res.json({ message: "Products fetched successfully", products });
     }
     catch (err) {
         console.log(err);
-        res.json({message : "Error fetching products"})
+        res.json({ message: "Error fetching products" })
     }
 })
 
@@ -392,15 +396,15 @@ app.delete("/delete/:id", async (req, res) => {
 app.put("/productsdata/:id", async (req, res) => {
     try {
         const id = req.params.id;
-        const {name, price, quantity, color} = req.body;
+        const { name, price, quantity, color } = req.body;
 
-        const updatedProduct = await productModel.findByIdAndUpdate(id, {name, price, quantity, color}, {new : true});
+        const updatedProduct = await productModel.findByIdAndUpdate(id, { name, price, quantity, color }, { new: true });
 
-        res.json({message : "Product updated successfully", updatedProduct});
+        res.json({ message: "Product updated successfully", updatedProduct });
     }
     catch (err) {
         console.log(err);
-        res.json({message : "Error updating product"});
+        res.json({ message: "Error updating product" });
     }
 })
 
@@ -408,15 +412,15 @@ app.delete("/products/:id", async (req, res) => {
     try {
         const id = req.params.id;
 
-        const product = await productModel.deleteOne({_id : id});
+        const product = await productModel.deleteOne({ _id: id });
 
-        if(product.deletedCount === 0) {
-            return res.json({message : "No product found with this ID"});
+        if (product.deletedCount === 0) {
+            return res.json({ message: "No product found with this ID" });
         }
 
         console.log(product);
 
-        res.json({message : "Product deleted successfully", product});
+        res.json({ message: "Product deleted successfully", product });
     }
     catch (err) {
         console.log(err);

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import ReCAPTCHA from "react-google-recaptcha";
+// import ReCAPTCHA from "react-google-recaptcha";
 import "./Login.css";
 
 const Login = () => {
@@ -9,8 +9,8 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState("");
-  const [captchaToken, setCaptchaToken] = useState("");
-  const siteKey = import.meta.env.VITE_SITE_KEY;
+  // const [captchaToken, setCaptchaToken] = useState("");
+  // const siteKey = import.meta.env.VITE_SITE_KEY;
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
@@ -19,15 +19,15 @@ const Login = () => {
       setMessage("⚠️ Please enter both email and password");
       return;
     }
-    if (!captchaToken) {
-      setMessage("⚠️ Please verify captcha first");
-      return;
-    }
+    // if (!captchaToken) {
+    //   setMessage("⚠️ Please verify captcha first");
+    //   return;
+    // }
     axios
       .post("http://localhost:5000/login", {
         email,
         password,
-        token: captchaToken,
+        // token: captchaToken,
       })
       .then((res) => {
         if (res.data.jwtToken) {
@@ -35,7 +35,7 @@ const Login = () => {
           localStorage.setItem("token", res.data.jwtToken);
           setEmail("");
           setPassword("");
-          setCaptchaToken("");
+          // setCaptchaToken("");
           if(res.data.userRole === "admin") {
             navigate("/admin");
           }
@@ -93,7 +93,7 @@ const Login = () => {
           <div className="forgot-password">
             <Link to="/forgotpsw">Forgot Password?</Link>
           </div>
-          {siteKey ? (
+          {/* {siteKey ? (
             <div className="captcha-wrapper">
               <ReCAPTCHA
                 sitekey={siteKey}
@@ -103,7 +103,7 @@ const Login = () => {
             </div>
           ) : (
             <p className="error">⚠️ Captcha site key not loaded!</p>
-          )}
+          )} */}
           <button type="submit" className="login-btn">
             Login
           </button>
