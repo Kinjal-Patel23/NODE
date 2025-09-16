@@ -30,6 +30,25 @@ mongoose.connect(process.env.MONGODB_URI)
 //     .then(() => console.log("Database connected successfully"))
 //     .catch((err) => console.log("Database connection error:", err));
 
+
+function authMiddleware (req, res, next) {
+    let token = req.headers.authorization;
+    let verifiedToken = jwt.verify(token, "admin@1234");
+
+    if(verifiedToken) {
+        return res.json({message : "Token Verified !"});
+    }
+
+    try {
+        let user = req.user;
+        console.log(user);
+        next();
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
 //Signup
 app.post("/signup", async (req, res) => {
     try {
@@ -271,7 +290,7 @@ app.post("/newpassword", async (req, res) => {
 })
 
 //home
-app.get("/home", async (req, res) => {
+app.get("/home", authMiddleware, async (req, res) => {
     try {
         const token = req.headers.authorization;
         const verifiedToken = await jwt.verify(token, "admin@1234");
@@ -292,7 +311,7 @@ app.get("/home", async (req, res) => {
 
 
 //super admin dashboard
-app.get("/spdash", async (req, res) => {
+app.get("/spdash", authMiddleware, async (req, res) => {
     try {
         const users = await authModel.find();
         console.log(users);
@@ -309,7 +328,7 @@ app.get("/spdash", async (req, res) => {
 })
 
 //admin dashboard
-app.get("/admindash", async (req, res) => {
+app.get("/admindash", authMiddleware,  async (req, res) => {
     try {
         let users = await authModel.find();
 
